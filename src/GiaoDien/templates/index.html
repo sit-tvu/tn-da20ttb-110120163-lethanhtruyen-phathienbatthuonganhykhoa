@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Classification</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        #preview {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            display: {% if img_path %}block{% else %}none{% endif %};
+            margin-top: 20px;
+        }
+        #fileName {
+            display: {% if img_path %}block{% else %}none{% endif %};
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center mt-5">Nhận dạng hình ảnh</h2>
+    <form id="predictionForm" method="POST" enctype="multipart/form-data" class="text-center">
+        <div class="form-group mx-auto" style="width: 50%;">
+            <label for="image">Chọn hình ảnh</label>
+            <input type="file" class="form-control-file" id="image" name="image" required>
+            <img id="preview" src="{{ img_path }}" class="img-fluid mx-auto d-block" alt="Preview Image">
+            <div id="fileName">{{ file_name }}</div>
+        </div>
+        <button type="submit" class="btn btn-primary mx-auto d-block">Dự đoán</button>
+    </form>
+    <div id="predictionResult" class="mt-5 text-center" {% if not results %}style="display: none;"{% endif %}>
+        {% if results %}
+            <h4>Kết quả dự đoán:</h4>
+            {% for model_name, result in results.items() %}
+                <p><strong>{{ model_name }}:</strong> {{ result.label }} ({{ (result.probability * 100) | round(2) }}%)</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.getElementById('image').addEventListener('change', function(event) {
+        var preview = document.getElementById('preview');
+        var fileNameDiv = document.getElementById('fileName');
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+            fileNameDiv.textContent = file.name;
+            fileNameDiv.style.display = 'block';
+        } else {
+            preview.style.display = 'none';
+            fileNameDiv.style.display = 'none';
+        }
+    });
+
+    document.getElementById('predictionForm').addEventListener('submit', function(event) {
+        var preview = document.getElementById('preview');
+        if (preview.style.display === 'none') {
+            event.preventDefault();
+            alert('Vui lòng chọn một hình ảnh trước khi dự đoán.');
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Report</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center mt-5">Báo cáo Kết quả Test</h2>
+    <div class="row">
+        {% for result in results %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{{ url_for('static', filename='test_images/' + result.img_name) }}" class="card-img-top" alt="Test Image">
+                <div class="card-body">
+                    <h5 class="card-title">{{ result.img_name }}</h5>
+                    <p class="card-text">
+                        <strong>CNN:</strong> {{ result.CNN.label }} ({{ (result.CNN.probability * 100) | round(2) }}%)<br>
+                        <strong>ResNet:</strong> {{ result.ResNet.label }} ({{ (result.ResNet.probability * 100) | round(2) }}%)<br>
+                        <strong>DenseNet:</strong> {{ result.DenseNet.label }} ({{ (result.DenseNet.probability * 100) | round(2) }}%)<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>
