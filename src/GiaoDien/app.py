@@ -18,12 +18,11 @@ def predict_label(img_path, model):
     img_array = np.expand_dims(img_array, axis=0)
     prediction = model.predict(img_array)
 
-    # Convert the prediction to label and probability
     labels = ['NORMAL', 'PNEUMONIA']
     label = labels[1] if prediction > 0.5 else labels[0]
-    probability = prediction[0][0] if prediction > 0.5 else 1 - prediction[0][0]
+    
 
-    return label, probability
+    return label
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
@@ -37,8 +36,8 @@ def home():
         img.save(img_path)
 
         for model_name, model in zip(["CNN", "ResNet", "DenseNet"], [model_cnn, model_resnet, model_densenet]):
-            label, probability = predict_label(img_path, model)
-            results[model_name] = {"label": label, "probability": probability}
+            label = predict_label(img_path, model)
+            results[model_name] = {"label": label}
         
     return render_template("index.html", results=results, img_path=img_path, file_name=file_name)
 

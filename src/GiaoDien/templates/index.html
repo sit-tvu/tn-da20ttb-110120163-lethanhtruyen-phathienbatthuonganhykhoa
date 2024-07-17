@@ -35,7 +35,7 @@
         {% if results %}
             <h4>Kết quả dự đoán:</h4>
             {% for model_name, result in results.items() %}
-                <p><strong>{{ model_name }}:</strong> {{ result.label }} ({{ (result.probability * 100) | round(2) }}%)</p>
+                <p><strong>{{ model_name }}:</strong> {{ result.label }}</p>
             {% endfor %}
         {% endif %}
     </div>
