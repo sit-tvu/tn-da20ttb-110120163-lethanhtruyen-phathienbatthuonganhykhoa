@@ -7,7 +7,6 @@ import numpy as np
 
 app = Flask(__name__)
 
-# Load the trained models
 model_cnn = load_model('models/model_CNN.h5')
 model_resnet = load_model('models/model_resnet.h5')
 model_densenet = load_model('models/model_densenet.h5')
@@ -27,7 +26,7 @@ def predict_label(img_path, model):
 @app.route("/", methods=['GET', 'POST'])
 def home():
     img_path = None
-    results = {}
+    result = None
     file_name = None
     if request.method == 'POST':
         img = request.files['image']
@@ -35,11 +34,10 @@ def home():
         img_path = "static/" + file_name
         img.save(img_path)
 
-        for model_name, model in zip(["CNN", "ResNet", "DenseNet"], [model_cnn, model_resnet, model_densenet]):
-            label = predict_label(img_path, model)
-            results[model_name] = {"label": label}
+        label = predict_label(img_path, model_resnet)
+        result = {"label": label}
         
-    return render_template("index.html", results=results, img_path=img_path, file_name=file_name)
+    return render_template("index.html", result=result, img_path=img_path, file_name=file_name)
 
 if __name__ == "__main__":
     app.run(debug=True)
