@@ -47,7 +47,11 @@
 4. Truy cập vào địa chỉ `http://127.0.0.1:5000` để xem ứng dụng.
 
 ## Kết quả
-- DenseNet: Độ chính xác 97.58%
-- CNN: Độ chính xác 94.07%
-- ResNet: Độ chính xác 95.45%
-
+- Độ chính xác:
++ DenseNet: 97.58%
++ CNN: 94.07%
++ ResNet: 95.45%
+- Ma trận nhầm lẫn:
+(src/image/confusion_matrix_CNN.png)
+(src/image/confusion_matrix_DenseNet.png)
+(src/image/confusion_matrix_ResNet.png)

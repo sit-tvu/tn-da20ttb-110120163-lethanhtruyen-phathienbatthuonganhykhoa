@@ -28,7 +28,7 @@ models = {
     "DenseNet": model_densenet
 }
 
-def confusion_matrix(model, test_ds):
+def conf_matr(model, test_ds):
     y_true = []
     y_pred = []
 
@@ -42,7 +42,7 @@ def confusion_matrix(model, test_ds):
     cm = confusion_matrix(y_true, y_pred)
     return cm
 
-def plot_confusion_matrix(cm, model_name):
+def plot_conf_matr(cm, model_name):
     plt.figure(figsize=(6, 6))
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=['Normal', 'Pneumonia'], yticklabels=['Normal', 'Pneumonia'])
     plt.title(f'Ma trận nhầm lẫn của mô hình {model_name}')
@@ -51,7 +51,7 @@ def plot_confusion_matrix(cm, model_name):
     plt.show()
 
 for model_name, model in models.items():
-    cm = confusion_matrix(model, test_ds)
+    cm = conf_matr(model, test_ds)
     print(f"Ma trận nhầm lẫn của mô hình {model_name}:")
     print(cm)
-    plot_confusion_matrix(cm, model_name)
+    plot_conf_matr(cm, model_name)
