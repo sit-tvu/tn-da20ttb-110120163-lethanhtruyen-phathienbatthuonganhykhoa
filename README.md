@@ -51,7 +51,7 @@
   - CNN: 94.07%
   - ResNet: 95.45%
   - DenseNet: 97.58%
-- Ma trận nhầm lẫn:
+- Ma trận nhầm lẫn:  
   ![CNN](./src/image/confusion_matrix_CNN.png)
   ![DenseNet](./src/image/confusion_matrix_DenseNet.png)
   ![ResNet](./src/image/confusion_matrix_ResNet.png)
